@@ -32,4 +32,50 @@ Once `watchdog` is installed, you can run CSV Watcher as described in the Usage 
 
 
 ## Usage
-Coming Soon
+
+This package provides a `Watcher` class that monitors a directory for changes in CSV files and updates an internal data structure accordingly. It also includes a simple usage example in `runner.py` that demonstrates how to use the `Watcher` class and prints updated data to the console whenever a CSV file is modified.
+
+Here's an example on how to use the `Watcher`:
+
+```python
+from watcher import Watcher
+
+# Define a handler function
+def data_changed_handler(data):
+    # Write your code that does stuff with the data here!
+    print(data) #for example, simply print the data to the console
+
+# Create a new Watcher
+wd = Watcher('./data')
+# Subscribe the handler
+wd.subscribe(data_changed_handler)
+```
+
+By default, the `Watcher` will process all CSV files in the directory at startup. This behavior can be customized by passing a `process_at_start=False` argument to the `Watcher` constructor:
+
+```python
+# Create a new Watcher that does not process files at startup
+wd = Watcher('./data', process_at_start=False)
+```
+
+Remember to replace `'./data'` with the path to the directory you want to monitor.
+
+To keep your main script running (since the watcher runs as a child thread and would terminate if your main script closes), you should include a loop:
+
+```python
+try:
+    while True:
+        time.sleep(1)
+except KeyboardInterrupt:
+    print("Stopping...")
+```
+
+If you use this looping code, you can stop the script at any time by pressing `Ctrl+C`.
+
+To run the example script, navigate to the directory containing `runner.py` and use the following command:
+
+```bash
+python3 runner.py [dir_path]
+```
+
+Where `[dir_path]` is the path to the directory you want to monitor.
