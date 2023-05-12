@@ -11,6 +11,21 @@ The expected CSV file format consists of four columns: timestamp, icao, key, and
 
 Please note that this project does not extend or modify the pyModeS project in any way. It is a separate utility that merely uses the output produced by pyModeS or any other system that generates CSV files in the same format.
 
+## Requirements
+
+1. **Python 3:** This project is written in Python 3, and likely won't work with Python 2 due to differences in syntax and libraries. Make sure you're using Python 3 before you start.
+
+2. **Watchdog Python Package:** The Watchdog package is used for monitoring the directory containing the CSV data files. You can install it via pip. Depending on your environment, you may need to use `pip3` instead of `pip`. This is because in some systems, `pip` is still linked to Python 2's package manager, while `pip3` is linked to Python 3's package manager. If you're in such an environment, `pip3` is the right command to use. Install with either command as shown below:
+
+    ```bash
+    pip install watchdog
+    # or
+    pip3 install watchdog
+    ```
+
+3. **CSV Data Files:** The application is designed to work with CSV data files in the format output by the pyModeS library. These files should have four fields in the following order: timestamp, icao, key, and value. The files should NOT have a data header row labeling these fields (i.e., the first row should be data).
+
+
 
 ## Setup
 
@@ -79,3 +94,5 @@ python3 runner.py [dir_path]
 ```
 
 Where `[dir_path]` is the path to the directory you want to monitor.
+
+Refer to `runner.py` for a working example. 
