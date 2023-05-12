@@ -1,3 +1,4 @@
+# watcher.py
 import os
 import csv
 import json
@@ -6,18 +7,27 @@ from watchdog.events import FileSystemEventHandler
 
 class Watcher(FileSystemEventHandler):
 
-    def __init__(self, dir_path):
+    def __init__(self, dir_path, process_at_start=True):
         self.dir_path = dir_path
         self.data = {}
         self.subscribers = []
         self.observer = Observer()
         self.observer.schedule(self, path=dir_path, recursive=False)
         self.observer.start()
+        
+        if process_at_start:
+            self.process_existing_files()
 
     def on_modified(self, event):
         if not event.is_directory and event.src_path.endswith('.csv'):
             self.update_data(event.src_path)
             self.notify()
+
+    def process_existing_files(self):
+        for filename in os.listdir(self.dir_path):
+            if filename.endswith('.csv'):
+                self.update_data(os.path.join(self.dir_path, filename))
+        self.notify()
 
     def update_data(self, file_path):
         valid_keys = {'cs', 'trk', 'roc', 'gs', 'alt', 'lat', 'lon'}
