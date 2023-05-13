@@ -19,21 +19,17 @@ To use `watcher.py` and `watcher_demo.py`, you will need:
 
 1. **Python 3:** This project is written in Python 3, and likely won't work with Python 2 due to differences in syntax and libraries. Make sure you're using Python 3 before you start.
 
-2. **Python Dependencies:** There are several Python dependencies used in this project. You can install them via pip. Depending on your environment, you may need to use pip3 instead of pip. This is because in some systems, pip is still linked to Python 2's package manager, while pip3 is linked to Python 3's package manager. If you're in such an environment, pip3 is the right command to use. When in doubt, try `pip3`. Install with whichever set of commands shown below is right for your environment:
-    
-    `pip3`:
+2. **Python Dependencies:** This project has several Python dependencies, which are listed in the requirements.txt file. You can install them using pip, the Python package installer. Depending on your environment, you may need to use pip3 instead of pip. This is because, in some systems, pip is still linked to Python 2's package manager, while pip3 is linked to Python 3's package manager. If you're in such an environment, pip3 is the right command to use. When in doubt, try pip3.
+
+    To install the dependencies, navigate to the project directory and run the following command:
+
+    For `pip3`:
     ```bash
-        pip3 install watchdog 
-        pip3 install requests 
-        pip3 install argparse 
-        pip3 install flask
+        pip3 install -r requirements.txt
     ```
-    `pip`:
+    For `pip`:
     ```bash
-        pip install watchdog 
-        pip install requests 
-        pip install argparse 
-        pip install flask
+        pip install -r requirements.txt
     ```
 3. **CSV Files:** The application is designed to work with CSV data files in the format output by the pyModeS as of May 2023. The expected CSV file format consists of four columns: timestamp, icao, key, and value. The keys that are handled include `'cs'` for callsign, `'trk'`, `'roc'`, `'gs'`, `'alt'` for altitude, `'lat'` for latitude, and `'lon'` for longitude. Any other keys are ignored.
 
