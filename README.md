@@ -13,7 +13,7 @@ Please note that this project does not extend or modify the pyModeS project in a
 
 ## Requirements
 
-To use `watcher.py` and `runner.py`, you will need:
+To use `watcher.py` and `watcher_demo.py`, you will need:
 
 1. **Python 3:** This project is written in Python 3, and likely won't work with Python 2 due to differences in syntax and libraries. Make sure you're using Python 3 before you start.
 
@@ -27,7 +27,7 @@ To use `watcher.py` and `runner.py`, you will need:
 
 3. **CSV Data Files:** The application is designed to work with CSV data files in the format output by the pyModeS library. These files should have four fields in the following order: timestamp, icao, key, and value. The files should NOT have a data header row labeling these fields (i.e., the first row should be data).
 
-To use `remote_sender.py`, you will additionally need:
+To use `watcher_demo_remote_sender.py`, you will additionally need:
 
 4. **python-dotenv:** A dependency used for reading environment variables stored in a .env file.
 ```bash
@@ -38,7 +38,7 @@ pip3 install python-dotenv
 
 ## Setup
 
-### watcher.py and runner.py
+### watcher.py and watcher_demo.py
 Before you can use CSV Watcher, you need to install the Python `watchdog` package, which is a dependency for this project.
 
 You can install `watchdog` using pip or pip3, depending on your Python setup. Open a terminal and type the following command to install `watchdog`:
@@ -55,9 +55,9 @@ pip3 install watchdog
 
 Once `watchdog` is installed, you can run CSV Watcher as described in the Usage section.
 
-### remote_sender.py
+### watcher_demo_remote_sender.py
 
-In order to use `remote_sender.py`, you need to setup the environment variables `REMOTE_SENDER_DESTINATION_URL` and `REMOTE_SENDER_DESTINATION_PORT`. These variables are used by the script to determine the server to which it needs to send the data. To do this, create a `.env` file in the same directory as `remote_sender.py` and set the variables in the following format:
+In order to use `watcher_demo_remote_sender.py`, you need to setup the environment variables `REMOTE_SENDER_DESTINATION_URL` and `REMOTE_SENDER_DESTINATION_PORT`. These variables are used by the script to determine the server to which it needs to send the data. To do this, create a `.env` file in the same directory as `watcher_demo_remote_sender.py` and set the variables in the following format:
 
 ```bash
 REMOTE_SENDER_DESTINATION_URL=<your_destination_url>
@@ -70,7 +70,7 @@ If `REMOTE_SENDER_DESTINATION_PORT` is not specified in the `.env` file, the scr
 
 Please note that if `REMOTE_SENDER_DESTINATION_URL` is not specified in the `.env` file, the script will exit with a warning since this is a required parameter.
 
-After setting up the `.env` file, you can run `remote_sender.py` as described in the Usage section.
+After setting up the `.env` file, you can run `watcher_demo_remote_sender.py` as described in the Usage section.
 
 
 
@@ -78,7 +78,7 @@ After setting up the `.env` file, you can run `remote_sender.py` as described in
 ## Usage
 
 ### watcher.py
-This package provides a `Watcher` class that monitors a directory for changes in CSV files and updates an internal data structure accordingly. It also includes a simple usage example in `runner.py` that demonstrates how to use the `Watcher` class and prints updated data to the console whenever a CSV file is modified.
+This package provides a `Watcher` class that monitors a directory for changes in CSV files and updates an internal data structure accordingly. It also includes a simple usage example in `watcher_demo.py` that demonstrates how to use the `Watcher` class and prints updated data to the console whenever a CSV file is modified.
 
 Here's an example on how to use the `Watcher`:
 
@@ -117,21 +117,21 @@ except KeyboardInterrupt:
 
 If you use this looping code, you can stop the script at any time by pressing `Ctrl+C`.
 
-To run the example script, navigate to the directory containing `runner.py` and use the following command:
+To run the example script, navigate to the directory containing `watcher_demo.py` and use the following command:
 
 ```bash
-python3 runner.py [dir_path]
+python3 watcher_demo.py [dir_path]
 ```
 
 Where `[dir_path]` is the path to the directory you want to monitor.
 
-Refer to `runner.py` for a working example. 
+Refer to `watcher_demo.py` for a working example. 
 
-### remote_sender.py
+### watcher_demo_remote_sender.py
 
-The `remote_sender.py` script is used to send data to a remote destination. Fundamentally, it has the same processing loop as `runner.py`: Wait for data to change, and when it does, do something. 
+The `watcher_demo_remote_sender.py` script is used to send data to a remote destination. Fundamentally, it has the same processing loop as `watcher_demo.py`: Wait for data to change, and when it does, do something. 
 
-Unlike `runner.py`, which simply prints the data to the console as a trivial example, `remote_sender.py` is an example of a usage of `watcher.py` that actually does something useful with the data, namely sending it somewhere else! It reads the destination URL and port number from the environment variables. 
+Unlike `watcher_demo.py`, which simply prints the data to the console as a trivial example, `watcher_demo_remote_sender.py` is an example of a usage of `watcher.py` that actually does something useful with the data, namely sending it somewhere else! It reads the destination URL and port number from the environment variables. 
 
 Before running the script, you need to set these environment variables in a `.env` file in your project's root directory:
 
@@ -142,10 +142,10 @@ REMOTE_SENDER_DESTINATION_PORT=<your_destination_port>
 
 Replace `<your_destination_url>` and `<your_destination_port>` with your actual destination URL and port number. The port number will default to `80` if not specified, but you will receive an error if you do not specify a URL.
 
-To run `remote_sender.py`, navigate to the directory containing the script and use the following command:
+To run `watcher_demo_remote_sender.py`, navigate to the directory containing the script and use the following command:
 
 ```bash
-python3 remote_sender.py [dir_path]
+python3 watcher_demo_remote_sender.py [dir_path]
 ```
 
 Where `[dir_path]` is the path to the directory you want to monitor.
