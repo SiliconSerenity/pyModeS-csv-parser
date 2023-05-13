@@ -1,4 +1,3 @@
-# remote_sender.py
 import sys
 import time
 import requests
