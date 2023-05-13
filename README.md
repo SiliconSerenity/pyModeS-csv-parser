@@ -19,7 +19,7 @@ To use `watcher.py` and `watcher_demo.py`, you will need:
 
 1. **Python 3:** This project is written in Python 3, and likely won't work with Python 2 due to differences in syntax and libraries. Make sure you're using Python 3 before you start.
 
-2. **Python Dependencies:** This project has several Python dependencies, which are listed in the requirements.txt file. You can install them using pip, the Python package installer. Depending on your environment, you may need to use pip3 instead of pip. This is because, in some systems, pip is still linked to Python 2's package manager, while pip3 is linked to Python 3's package manager. If you're in such an environment, pip3 is the right command to use. When in doubt, try pip3.
+2. **Python Dependencies:** This project has several Python dependencies, which are listed in the requirements.txt file. You can install them using `pip`, the Python package installer. Depending on your environment, you may need to use `pip3` instead of `pip`. This is because, in some systems, `pip` is still linked to Python 2's package manager, while `pip3` is linked to Python 3's package manager. If you're in such an environment, `pip3` is the right command to use. When in doubt, try `pip3`.
 
     To install the dependencies, navigate to the project directory and run the following command:
 
