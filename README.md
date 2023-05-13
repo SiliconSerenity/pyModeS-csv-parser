@@ -33,7 +33,7 @@ To use `watcher.py` and `watcher_demo.py`, you will need:
     ```
 3. **CSV Files:** The application is designed to work with CSV data files in the format output by the pyModeS as of May 2023. The expected CSV file format consists of four columns: timestamp, icao, key, and value. The keys that are handled include `'cs'` for callsign, `'trk'`, `'roc'`, `'gs'`, `'alt'` for altitude, `'lat'` for latitude, and `'lon'` for longitude. Any other keys are ignored.
 
- The files should NOT have a data header row labeling these fields (i.e., the first row should be data).
+    The files should NOT have a data header row labeling these fields (i.e., the first row should be data).
 
 ## Usage
 
