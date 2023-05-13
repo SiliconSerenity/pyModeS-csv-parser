@@ -77,6 +77,7 @@ After setting up the `.env` file, you can run `remote_sender.py` as described in
 
 ## Usage
 
+### watcher.py
 This package provides a `Watcher` class that monitors a directory for changes in CSV files and updates an internal data structure accordingly. It also includes a simple usage example in `runner.py` that demonstrates how to use the `Watcher` class and prints updated data to the console whenever a CSV file is modified.
 
 Here's an example on how to use the `Watcher`:
@@ -125,6 +126,26 @@ python3 runner.py [dir_path]
 Where `[dir_path]` is the path to the directory you want to monitor.
 
 Refer to `runner.py` for a working example. 
+
+### remote_sender.py
+
+The `remote_sender.py` script is used to send data to a remote destination. Fundamentally, it has the same processing loop as `runner.py`: Wait for data to change, and when it does, do something. Unlike `runner.py`, which simply prints the data to the console as a trivial example, `remote_sender.py` is an example of a usage of `watcher.py` that actually does something useful with the data, namely sending it somewhere else! It reads the destination URL and port number from the environment variables. Before running the script, you need to set these environment variables in a `.env` file in your project's root directory:
+
+```bash
+REMOTE_SENDER_DESTINATION_URL=http://localhost
+REMOTE_SENDER_DESTINATION_PORT=80
+```
+
+Replace `http://localhost` and `80` with your actual destination URL and port number. The port number will default to `80` if not specified, but you will receive an error if you do not specify a URL.
+
+To run `remote_sender.py`, navigate to the directory containing the script and use the following command:
+
+```bash
+python3 remote_sender.py
+```
+
+Remember to replace `http://localhost` and `80` with your actual destination URL and port number in the `.env` file.
+
 
 
 # Links
