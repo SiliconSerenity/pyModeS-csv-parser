@@ -5,11 +5,13 @@ Tools to improve the usefulness of pyModeS CSV output without modifying pyModeS 
 # CSV Watcher for pyModeS
 
 ## Overview
-This Python application, referred to as CSV Watcher, is a standalone utility created to monitor changes in CSV files within a specified directory. It is designed to work with pyModeS or any CSV files that follow the expected format. 
+The core of this repository is the CSV Watcher, or just Watcher. It is a class designed to be reusable in a variety of python programs to easily automate processing of data collected and output to CSV format by the pyModeS library. In addition to the Watcher, several useful examples of functionality are provided, but keep in mind that the Watcher is the first link in the chain for all of their functionality.
 
 The expected CSV file format consists of four columns: timestamp, icao, key, and value. The keys that are handled include 'cs' for callsign, 'trk', 'roc', 'gs', 'alt' for altitude, 'lat' for latitude, 'lon' for longitude.
 
-Please note that this project does not extend or modify the pyModeS project in any way. It is a separate utility that merely uses the output produced by pyModeS or any other system that generates CSV files in the same format.
+Please note that this project does not extend or modify the pyModeS project in any way. This project is simply a set of separate utilities that merely use the output produced by pyModeS or any other system that generates CSV files in the same format.
+
+The overall goal of this project is to make it easy to perform additional automated processing on the CSV output of pyModeS, without modifying pyModeS itself.
 
 ## Requirements
 
@@ -17,97 +19,35 @@ To use `watcher.py` and `watcher_demo.py`, you will need:
 
 1. **Python 3:** This project is written in Python 3, and likely won't work with Python 2 due to differences in syntax and libraries. Make sure you're using Python 3 before you start.
 
-2. **Watchdog Python Package:** The Watchdog package is used for monitoring the directory containing the CSV data files. You can install it via pip. Depending on your environment, you may need to use `pip3` instead of `pip`. This is because in some systems, `pip` is still linked to Python 2's package manager, while `pip3` is linked to Python 3's package manager. If you're in such an environment, `pip3` is the right command to use. Install with either command as shown below:
-
+    Open a terminal window and run
     ```bash
-    pip install watchdog
-    # or
-    pip3 install watchdog
+    python --version
+    ```
+    If it says `Python 3.X.X`, you're all set! You can use `python` and `pip` as commands wherever relevant. 
+    If it says `Python 2.X.X`, then try the following:
+    ```bash
+    python3 --version
+    ```
+    If this command outputs `Python 3.X.X`, you're all set! But you will need to use `python3` instead of `python` and `pip3` instead of `pip` in all relevant places. 
+
+    If this command fails, go to the python website and install the latest version of Python 3.X: https://www.python.org/downloads/.
+    Then try the above commands again to verify you have a 3.X.X version installed and working. 
+
+    If you still can't get it to work, please seek additional resources online. Further Python installation troubleshooting is beyond the scope of this project.
+
+2. **pip3 packages:** There are a number of various dependencies used in this project. While I could list each set of dependencies by the file that requires them, it's probably just easier for everyone if I give you a command that lets you install them all at once so you have them later, if and when you need them.
+
+    If you're using `pip`, install them with:
+    ```bash
+        pip install watchdog requests argparse flask
     ```
 
-3. **CSV Data Files:** The application is designed to work with CSV data files in the format output by the pyModeS library. These files should have four fields in the following order: timestamp, icao, key, and value. The files should NOT have a data header row labeling these fields (i.e., the first row should be data).
+    If you're using `pip3`, install them with:
+    ```bash
+        pip3 install watchdog requests argparse flask
+    ```
 
-## Setup
-
-### watcher.py and watcher_demo.py
-Before you can use CSV Watcher, you need to install the Python `watchdog` package, which is a dependency for this project.
-
-You can install `watchdog` using pip or pip3, depending on your Python setup. Open a terminal and type the following command to install `watchdog`:
-
-```shell
-pip install watchdog
-```
-
-Or, if you are using Python 3 and pip3 is your package manager, type:
-
-```shell
-pip3 install watchdog
-```
-
-Once `watchdog` is installed, you can run CSV Watcher as described in the Usage section.
-
-### watcher_demo_http.py
-
-In order for `watcher_demo_http.py` to be useful, a corresponding server needs to be listening on the port and url it is attempting to send data to. See `web_listener_demo.py` for an example of this.
-
-To use `watcher_demo_http.py`, you will need to ensure you have the necessary Python packages installed. These packages are:
-
-- **requests:** This package is used for sending HTTP requests.
-- **argparse:** This package is used for parsing command line arguments.
-
-You can install these packages using pip or pip3, depending on your Python setup. Open a terminal and type the following command to install these packages:
-
-```shell
-pip install requests argparse
-```
-
-Or, if you are using Python 3 and pip3 is your package manager, type:
-
-```shell
-pip3 install requests argparse
-```
-
-Once these packages are installed, you can run `watcher_demo_http.py` as described in the Usage section.
-
-### web_listener.py
-
-To use `web_listener.py`, you will need to ensure you have the necessary Python packages installed. These packages are:
-
-- **flask:** This package is used for setting up the web server.
-
-You can install this package using pip or pip3, depending on your Python setup. Open a terminal and type the following command to install the package:
-
-```shell
-pip install flask
-```
-
-Or, if you are using Python 3 and pip3 is your package manager, type:
-
-```shell
-pip3 install flask
-```
-Once the flask package is installed, you can use `web_listener.py` as a module in your Python programs.
-
-
-### web_listener_demo.py
-
-To use `web_listener_demo.py`, you will need to install the `Flask` module, which is used for creating the web server. You can install it via `pip` or `pip3`, depending on your Python setup. Open a terminal and type the following command to install `Flask`:
-
-```shell
-pip install flask
-```
-
-Once `Flask` is installed, you can run the `web_listener_demo.py` script as described in the Usage section.
-
-Please note that `web_listener_demo.py` is a demo program that demonstrates the usage of `WebListener`. It is not intended to be run directly. You can use it as a reference to implement your own handler functions and customize the behavior of the listener.
-
-Remember to replace the handler function `data_received_handler` with your own code that processes the received data.
-
-To run the example script, navigate to the directory containing `web_listener_demo.py` and use the following command:
-
-```shell
-python3 web_listener_demo.py
-```
+3. **CSV Data Files:** The application is designed to work with CSV data files in the format output by the pyModeS as of May 2023. These files should have four columns in the following order: unix_timestamp, icao, key, and value. The files should NOT have a data header row labeling these fields (i.e., the first row should be data).
 
 ## Usage
 
