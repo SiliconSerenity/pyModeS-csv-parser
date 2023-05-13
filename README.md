@@ -7,7 +7,7 @@ Tools to improve the usefulness of pyModeS CSV output without modifying pyModeS 
 ## Overview
 The core of this repository is the CSV Watcher, or just Watcher. It is a class designed to be reusable in a variety of python programs to easily automate processing of data collected and output to CSV format by the pyModeS library. In addition to the Watcher, several useful examples of functionality are provided, but keep in mind that the Watcher is the first link in the chain for all of their functionality.
 
-The expected CSV file format consists of four columns: timestamp, icao, key, and value. The keys that are handled include 'cs' for callsign, 'trk', 'roc', 'gs', 'alt' for altitude, 'lat' for latitude, 'lon' for longitude.
+See the Requirements section for details about the CSV format.
 
 Please note that this project does not extend or modify the pyModeS project in any way. This project is simply a set of separate utilities that merely use the output produced by pyModeS or any other system that generates CSV files in the same format.
 
@@ -19,35 +19,25 @@ To use `watcher.py` and `watcher_demo.py`, you will need:
 
 1. **Python 3:** This project is written in Python 3, and likely won't work with Python 2 due to differences in syntax and libraries. Make sure you're using Python 3 before you start.
 
-    Open a terminal window and run
+2. **Python Dependencies:** There are several Python dependencies used in this project. You can install them via pip. Depending on your environment, you may need to use pip3 instead of pip. This is because in some systems, pip is still linked to Python 2's package manager, while pip3 is linked to Python 3's package manager. If you're in such an environment, pip3 is the right command to use. When in doubt, try `pip3`. Install with whichever set of commands shown below is right for your environment:
+    
+    `pip3`:
     ```bash
-    python --version
+        pip3 install watchdog 
+        pip3 install requests 
+        pip3 install argparse 
+        pip3 install flask
     ```
-    If it says `Python 3.X.X`, you're all set! You can use `python` and `pip` as commands wherever relevant. 
-    If it says `Python 2.X.X`, then try the following:
+    `pip`:
     ```bash
-    python3 --version
+        pip install watchdog 
+        pip install requests 
+        pip install argparse 
+        pip install flask
     ```
-    If this command outputs `Python 3.X.X`, you're all set! But you will need to use `python3` instead of `python` and `pip3` instead of `pip` in all relevant places. 
+3. **CSV Files:** The application is designed to work with CSV data files in the format output by the pyModeS as of May 2023. The expected CSV file format consists of four columns: timestamp, icao, key, and value. The keys that are handled include `'cs'` for callsign, `'trk'`, `'roc'`, `'gs'`, `'alt'` for altitude, `'lat'` for latitude, and `'lon'` for longitude. Any other keys are ignored.
 
-    If this command fails, go to the python website and install the latest version of Python 3.X: https://www.python.org/downloads/.
-    Then try the above commands again to verify you have a 3.X.X version installed and working. 
-
-    If you still can't get it to work, please seek additional resources online. Further Python installation troubleshooting is beyond the scope of this project.
-
-2. **pip3 packages:** There are a number of various dependencies used in this project. While I could list each set of dependencies by the file that requires them, it's probably just easier for everyone if I give you a command that lets you install them all at once so you have them later, if and when you need them.
-
-    If you're using `pip`, install them with:
-    ```bash
-        pip install watchdog requests argparse flask
-    ```
-
-    If you're using `pip3`, install them with:
-    ```bash
-        pip3 install watchdog requests argparse flask
-    ```
-
-3. **CSV Data Files:** The application is designed to work with CSV data files in the format output by the pyModeS as of May 2023. These files should have four columns in the following order: unix_timestamp, icao, key, and value. The files should NOT have a data header row labeling these fields (i.e., the first row should be data).
+ The files should NOT have a data header row labeling these fields (i.e., the first row should be data).
 
 ## Usage
 
@@ -110,12 +100,10 @@ Unlike watcher_demo.py, which simply prints the data to the console as a trivial
 To run watcher_demo_http.py, navigate to the directory containing the script and use the following command:
 
 ```bash
-python watcher_demo_http.py --url <destination_url> --port <destination_port> --watchlocation <directory_to_watch>
+python3 watcher_demo_http.py --url <destination_url> --port <destination_port> --watchlocation <directory_to_watch>
 ```
 
 Replace `<destination_url>`, `<destination_port>`, and `<directory_to_watch>` with your actual destination URL, port number, and the path to the directory you want to monitor. The port number will default to `80` if not specified, but `--url` and `--watchlocation` are mandatory.
 
 # Links
 pyModeS: https://github.com/junzis/pyModeS
-
-
