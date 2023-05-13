@@ -129,22 +129,24 @@ Refer to `runner.py` for a working example.
 
 ### remote_sender.py
 
-The `remote_sender.py` script is used to send data to a remote destination. Fundamentally, it has the same processing loop as `runner.py`: Wait for data to change, and when it does, do something. Unlike `runner.py`, which simply prints the data to the console as a trivial example, `remote_sender.py` is an example of a usage of `watcher.py` that actually does something useful with the data, namely sending it somewhere else! It reads the destination URL and port number from the environment variables. Before running the script, you need to set these environment variables in a `.env` file in your project's root directory:
+The `remote_sender.py` script is used to send data to a remote destination. Fundamentally, it has the same processing loop as `runner.py`: Wait for data to change, and when it does, do something. 
+
+Unlike `runner.py`, which simply prints the data to the console as a trivial example, `remote_sender.py` is an example of a usage of `watcher.py` that actually does something useful with the data, namely sending it somewhere else! It reads the destination URL and port number from the environment variables. 
+
+Before running the script, you need to set these environment variables in a `.env` file in your project's root directory:
 
 ```bash
 REMOTE_SENDER_DESTINATION_URL=<your_destination_url>
-REMOTE_SENDER_DESTINATION_PORT=80
+REMOTE_SENDER_DESTINATION_PORT=<your_destination_port>
 ```
 
-Replace `<your_destination_url>` and `80` with your actual destination URL and port number. The port number will default to `80` if not specified, but you will receive an error if you do not specify a URL.
+Replace `<your_destination_url>` and `<your_destination_port>` with your actual destination URL and port number. The port number will default to `80` if not specified, but you will receive an error if you do not specify a URL.
 
 To run `remote_sender.py`, navigate to the directory containing the script and use the following command:
 
 ```bash
 python3 remote_sender.py
 ```
-
-Remember to replace `<your_destination_url>` and `80` with your actual destination URL and port number in the `.env` file.
 
 
 
