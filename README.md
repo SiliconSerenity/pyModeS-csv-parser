@@ -27,15 +27,6 @@ To use `watcher.py` and `watcher_demo.py`, you will need:
 
 3. **CSV Data Files:** The application is designed to work with CSV data files in the format output by the pyModeS library. These files should have four fields in the following order: timestamp, icao, key, and value. The files should NOT have a data header row labeling these fields (i.e., the first row should be data).
 
-To use `watcher_demo_remote_sender.py`, you will additionally need:
-
-4. **python-dotenv:** A dependency used for reading environment variables stored in a .env file.
-```bash
-pip install python-dotenv
-# or
-pip3 install python-dotenv
-```
-
 ## Setup
 
 ### watcher.py and watcher_demo.py
@@ -55,25 +46,68 @@ pip3 install watchdog
 
 Once `watchdog` is installed, you can run CSV Watcher as described in the Usage section.
 
-### watcher_demo_remote_sender.py
+### watcher_demo_http.py
 
-In order to use `watcher_demo_remote_sender.py`, you need to setup the environment variables `REMOTE_SENDER_DESTINATION_URL` and `REMOTE_SENDER_DESTINATION_PORT`. These variables are used by the script to determine the server to which it needs to send the data. To do this, create a `.env` file in the same directory as `watcher_demo_remote_sender.py` and set the variables in the following format:
+In order for `watcher_demo_http.py` to be useful, a corresponding server needs to be listening on the port and url it is attempting to send data to. See `web_listener_demo.py` for an example of this.
 
-```bash
-REMOTE_SENDER_DESTINATION_URL=<your_destination_url>
-REMOTE_SENDER_DESTINATION_PORT=<your_destination_port>
+To use `watcher_demo_http.py`, you will need to ensure you have the necessary Python packages installed. These packages are:
+
+- **requests:** This package is used for sending HTTP requests.
+- **argparse:** This package is used for parsing command line arguments.
+
+You can install these packages using pip or pip3, depending on your Python setup. Open a terminal and type the following command to install these packages:
+
+```shell
+pip install requests argparse
 ```
 
-Replace `<your_destination_url>` and `<your_destination_port>` with your actual destination URL and port. 
+Or, if you are using Python 3 and pip3 is your package manager, type:
 
-If `REMOTE_SENDER_DESTINATION_PORT` is not specified in the `.env` file, the script will use a default port of 8000.
+```shell
+pip3 install requests argparse
+```
 
-Please note that if `REMOTE_SENDER_DESTINATION_URL` is not specified in the `.env` file, the script will exit with a warning since this is a required parameter.
+Once these packages are installed, you can run `watcher_demo_http.py` as described in the Usage section.
 
-After setting up the `.env` file, you can run `watcher_demo_remote_sender.py` as described in the Usage section.
+### web_listener.py
+
+To use `web_listener.py`, you will need to ensure you have the necessary Python packages installed. These packages are:
+
+- **flask:** This package is used for setting up the web server.
+
+You can install this package using pip or pip3, depending on your Python setup. Open a terminal and type the following command to install the package:
+
+```shell
+pip install flask
+```
+
+Or, if you are using Python 3 and pip3 is your package manager, type:
+
+```shell
+pip3 install flask
+```
+Once the flask package is installed, you can use `web_listener.py` as a module in your Python programs.
 
 
+### web_listener_demo.py
 
+To use `web_listener_demo.py`, you will need to install the `Flask` module, which is used for creating the web server. You can install it via `pip` or `pip3`, depending on your Python setup. Open a terminal and type the following command to install `Flask`:
+
+```shell
+pip install flask
+```
+
+Once `Flask` is installed, you can run the `web_listener_demo.py` script as described in the Usage section.
+
+Please note that `web_listener_demo.py` is a demo program that demonstrates the usage of `WebListener`. It is not intended to be run directly. You can use it as a reference to implement your own handler functions and customize the behavior of the listener.
+
+Remember to replace the handler function `data_received_handler` with your own code that processes the received data.
+
+To run the example script, navigate to the directory containing `web_listener_demo.py` and use the following command:
+
+```shell
+python3 web_listener_demo.py
+```
 
 ## Usage
 
@@ -127,29 +161,21 @@ Where `[dir_path]` is the path to the directory you want to monitor.
 
 Refer to `watcher_demo.py` for a working example. 
 
-### watcher_demo_remote_sender.py
 
-The `watcher_demo_remote_sender.py` script is used to send data to a remote destination. Fundamentally, it has the same processing loop as `watcher_demo.py`: Wait for data to change, and when it does, do something. 
+### watcher_demo_http.py
+The watcher_demo_http.py script is used to send data to a remote destination. Fundamentally, it has the same processing loop as watcher_demo.py: Wait for data to change, and when it does, do something.
 
-Unlike `watcher_demo.py`, which simply prints the data to the console as a trivial example, `watcher_demo_remote_sender.py` is an example of a usage of `watcher.py` that actually does something useful with the data, namely sending it somewhere else! It reads the destination URL and port number from the environment variables. 
+Unlike watcher_demo.py, which simply prints the data to the console as a trivial example, watcher_demo_http.py is an example usage of watcher.py that actually does something useful with the data, namely sending it somewhere else! It accepts the destination URL and port number as command line arguments.
 
-Before running the script, you need to set these environment variables in a `.env` file in your project's root directory:
-
-```bash
-REMOTE_SENDER_DESTINATION_URL=<your_destination_url>
-REMOTE_SENDER_DESTINATION_PORT=<your_destination_port>
-```
-
-Replace `<your_destination_url>` and `<your_destination_port>` with your actual destination URL and port number. The port number will default to `80` if not specified, but you will receive an error if you do not specify a URL.
-
-To run `watcher_demo_remote_sender.py`, navigate to the directory containing the script and use the following command:
+To run watcher_demo_http.py, navigate to the directory containing the script and use the following command:
 
 ```bash
-python3 watcher_demo_remote_sender.py [dir_path]
+python watcher_demo_http.py --url <destination_url> --port <destination_port> --watchlocation <directory_to_watch>
 ```
 
-Where `[dir_path]` is the path to the directory you want to monitor.
-
+Replace `<destination_url>`, `<destination_port>`, and `<directory_to_watch>` with your actual destination URL, port number, and the path to the directory you want to monitor. The port number will default to `80` if not specified, but `--url` and `--watchlocation` are mandatory.
 
 # Links
 pyModeS: https://github.com/junzis/pyModeS
+
+
