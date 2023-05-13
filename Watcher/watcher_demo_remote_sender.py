@@ -1,55 +1,47 @@
-import sys
 import time
 import requests
 import json
-import os
-from dotenv import load_dotenv
+import argparse
 from watcher import Watcher
 
-# Load environment variables from a .env file
-load_dotenv()
-
-# Get the URL and port from the environment variables
-URL = os.getenv('REMOTE_SENDER_DESTINATION_URL')
-PORT = os.getenv('REMOTE_SENDER_DESTINATION_PORT', '80')  # Default to 80 if PORT is not set
-
-if URL is None:
-    print("The URL environment variable is not set.")
-    print("Please set the REMOTE_SENDER_DESTINATION_URL variable in your .env file.")
-    print("For example: REMOTE_SENDER_DESTINATION_URL=http://example.com")
-    exit(1)
-
-destination = f"{URL}:{PORT}"
-
-def send_to_server(data):
+def send_to_server(data, destination):
     response = requests.post(destination, json=data)
     return response.status_code
 
-def data_changed_handler(data):
+def data_changed_handler(data, destination):
     json_data = json.dumps(data)
     print("Sending data to remote server...")
-    status_code = send_to_server(json_data)
+    status_code = send_to_server(json_data, destination)
     if status_code == 200:
         print("Data sent successfully.")
     else:
         print(f"Failed to send data. Server responded with status code: {status_code}")
 
-if len(sys.argv) < 2:
-    print("Usage: python3 remote_sender.py [dir_path]")
-    sys.exit(1)
+def main():
+    # Create a parser for the command line arguments
+    parser = argparse.ArgumentParser(description="Watch a directory and send updates to a URL")
+    parser.add_argument("--url", required=True, help="The URL to send updates to")
+    parser.add_argument("--port", default='80', help="The port number of the destination. Defaults to 80 if not provided.")
+    parser.add_argument("--watchlocation", required=True, help="The directory to watch for changes")
 
-dir_path = sys.argv[1]
-wd = Watcher(dir_path)
-wd.subscribe(data_changed_handler)
+    args = parser.parse_args()
 
-print("Get initial data:")
-print(wd.getData())
+    destination = f"{args.url}:{args.port}"
 
-print("Watching directory: {}".format(dir_path))
-print("Press Ctrl+C to stop.")
+    wd = Watcher(args.watchlocation)
+    wd.subscribe(lambda data: data_changed_handler(data, destination))
 
-try:
-    while True:
-        time.sleep(1)
-except KeyboardInterrupt:
-    print("Stopping...")
+    print("Get initial data:")
+    print(wd.getData())
+
+    print(f"Watching directory: {args.watchlocation}")
+    print("Press Ctrl+C to stop.")
+
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("Stopping...")
+
+if __name__ == "__main__":
+    main()
