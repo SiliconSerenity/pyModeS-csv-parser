@@ -53,3 +53,6 @@ class Watcher(FileSystemEventHandler):
 
     def getData(self):
         return self.data
+
+if __name__ == "__main__":
+    print("Watcher is not intended to be run directly. Please use it as a module. See demo programs for examples.")

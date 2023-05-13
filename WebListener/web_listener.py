@@ -1,5 +1,3 @@
-# web_listener.py
-import argparse
 from flask import Flask, request, jsonify
 from threading import Thread
 
@@ -32,8 +30,4 @@ class WebListener:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--port', type=int, default=80, help='Port number for the web server')
-    args = parser.parse_args()
-
-    wl = WebListener(port=args.port)
+    print("WebListener is not intended to be run directly. Please use it as a module. See demo programs for examples.")
