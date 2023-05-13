@@ -13,6 +13,8 @@ Please note that this project does not extend or modify the pyModeS project in a
 
 ## Requirements
 
+To use `watcher.py` and `runner.py`, you will need:
+
 1. **Python 3:** This project is written in Python 3, and likely won't work with Python 2 due to differences in syntax and libraries. Make sure you're using Python 3 before you start.
 
 2. **Watchdog Python Package:** The Watchdog package is used for monitoring the directory containing the CSV data files. You can install it via pip. Depending on your environment, you may need to use `pip3` instead of `pip`. This is because in some systems, `pip` is still linked to Python 2's package manager, while `pip3` is linked to Python 3's package manager. If you're in such an environment, `pip3` is the right command to use. Install with either command as shown below:
@@ -25,10 +27,18 @@ Please note that this project does not extend or modify the pyModeS project in a
 
 3. **CSV Data Files:** The application is designed to work with CSV data files in the format output by the pyModeS library. These files should have four fields in the following order: timestamp, icao, key, and value. The files should NOT have a data header row labeling these fields (i.e., the first row should be data).
 
+To use `remote_sender.py`, you will additionally need:
 
+4. **python-dotenv:**: A dependency used for reading environment variables stored in a .env file.
+```bash
+pip install python-dotenv
+# or
+pip3 install python-dotenv
+```
 
 ## Setup
 
+### watcher.py and runner.py
 Before you can use CSV Watcher, you need to install the Python `watchdog` package, which is a dependency for this project.
 
 You can install `watchdog` using pip or pip3, depending on your Python setup. Open a terminal and type the following command to install `watchdog`:
@@ -44,6 +54,8 @@ pip3 install watchdog
 ```
 
 Once `watchdog` is installed, you can run CSV Watcher as described in the Usage section.
+
+
 
 
 ## Usage
