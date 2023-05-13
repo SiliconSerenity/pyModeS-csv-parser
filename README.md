@@ -55,6 +55,23 @@ pip3 install watchdog
 
 Once `watchdog` is installed, you can run CSV Watcher as described in the Usage section.
 
+### remote_sender.py
+
+In order to use `remote_sender.py`, you need to setup the environment variables `REMOTE_SENDER_DESTINATION_URL` and `REMOTE_SENDER_DESTINATION_PORT`. These variables are used by the script to determine the server to which it needs to send the data. To do this, create a `.env` file in the same directory as `remote_sender.py` and set the variables in the following format:
+
+```bash
+REMOTE_SENDER_DESTINATION_URL=<your_destination_url>
+REMOTE_SENDER_DESTINATION_PORT=<your_destination_port>
+```
+
+Replace `<your_destination_url>` and `<your_destination_port>` with your actual destination URL and port. 
+
+If `REMOTE_SENDER_DESTINATION_PORT` is not specified in the `.env` file, the script will use a default port of 8000.
+
+Please note that if `REMOTE_SENDER_DESTINATION_URL` is not specified in the `.env` file, the script will exit with a warning since this is a required parameter.
+
+After setting up the `.env` file, you can run `remote_sender.py` as described in the Usage section.
+
 
 
 

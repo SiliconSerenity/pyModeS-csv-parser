@@ -11,13 +11,13 @@ from watcher import Watcher
 load_dotenv()
 
 # Get the URL and port from the environment variables
-URL = os.getenv('REMOTE_SENDER.DESTINATION_URL')
-PORT = os.getenv('REMOTE_SENDER.DESTINATION_PORT', '80')  # Default to 80 if PORT is not set
+URL = os.getenv('REMOTE_SENDER_DESTINATION_URL')
+PORT = os.getenv('REMOTE_SENDER_DESTINATION_PORT', '80')  # Default to 80 if PORT is not set
 
 if URL is None:
     print("The URL environment variable is not set.")
-    print("Please set the REMOTE_SENDER.DESTINATION_URL variable in your .env file.")
-    print("For example: REMOTE_SENDER.DESTINATION_URL=http://example.com")
+    print("Please set the REMOTE_SENDER_DESTINATION_URL variable in your .env file.")
+    print("For example: REMOTE_SENDER_DESTINATION_URL=http://example.com")
     exit(1)
 
 destination = f"{URL}:{PORT}"
