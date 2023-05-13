@@ -145,9 +145,10 @@ Replace `<your_destination_url>` and `<your_destination_port>` with your actual 
 To run `remote_sender.py`, navigate to the directory containing the script and use the following command:
 
 ```bash
-python3 remote_sender.py
+python3 remote_sender.py [dir_path]
 ```
 
+Where `[dir_path]` is the path to the directory you want to monitor.
 
 
 # Links
