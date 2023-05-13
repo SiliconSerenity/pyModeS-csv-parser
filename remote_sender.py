@@ -29,11 +29,11 @@ def send_to_server(data):
 def data_changed_handler(data):
     json_data = json.dumps(data)
     print("Sending data to remote server...")
-    response = send_to_server(json_data)
-    if response.status_code == 200:
+    status_code = send_to_server(json_data)
+    if status_code == 200:
         print("Data sent successfully.")
     else:
-        print(f"Failed to send data. Server responded with: {response.status_code}")
+        print(f"Failed to send data. Server responded with status code: {status_code}")
 
 if len(sys.argv) < 2:
     print("Usage: python3 remote_sender.py [dir_path]")
