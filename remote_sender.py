@@ -3,12 +3,33 @@ import sys
 import time
 import requests
 import json
+import os
+from dotenv import load_dotenv
 from watcher import Watcher
+
+# Load environment variables from a .env file
+load_dotenv()
+
+# Get the URL and port from the environment variables
+URL = os.getenv('REMOTE_SENDER.DESTINATION_URL')
+PORT = os.getenv('REMOTE_SENDER.DESTINATION_PORT', '80')  # Default to 80 if PORT is not set
+
+if URL is None:
+    print("The URL environment variable is not set.")
+    print("Please set the REMOTE_SENDER.DESTINATION_URL variable in your .env file.")
+    print("For example: REMOTE_SENDER.DESTINATION_URL=http://example.com")
+    exit(1)
+
+destination = f"{URL}:{PORT}"
+
+def send_to_server(data):
+    response = requests.post(destination, json=data)
+    return response.status_code
 
 def data_changed_handler(data):
     json_data = json.dumps(data)
     print("Sending data to remote server...")
-    response = requests.post("http://example.com", data=json_data)
+    response = send_to_server(json_data)
     if response.status_code == 200:
         print("Data sent successfully.")
     else:
