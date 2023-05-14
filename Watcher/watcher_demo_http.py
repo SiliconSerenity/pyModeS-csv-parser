@@ -31,8 +31,8 @@ def main():
     wd = Watcher(args.watchlocation)
     wd.subscribe(lambda data: data_changed_handler(data, destination))
 
-    print("Get initial data:")
-    print(wd.getData())
+    #print("Get initial data:")
+    #print(wd.getData())
 
     print(f"Watching directory: {args.watchlocation}")
     print("Press Ctrl+C to stop.")

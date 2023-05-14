@@ -13,8 +13,8 @@ dir_path = sys.argv[1]
 wd = Watcher(dir_path)
 wd.subscribe(data_changed_handler)
 
-print("Get initial data:")
-print(wd.getData())
+#print("Get initial data:")
+#print(wd.getData())
 
 
 
