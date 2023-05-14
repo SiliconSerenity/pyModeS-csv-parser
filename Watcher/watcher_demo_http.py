@@ -2,7 +2,7 @@ import time
 import requests
 import json
 import argparse
-from watcher import Watcher
+from watcher import Watcher, Loader
 
 def send_to_server(data, destination):
     response = requests.post(destination, json=data)
@@ -29,10 +29,12 @@ def main():
     destination = f"{args.url}:{args.port}"
 
     wd = Watcher(args.watchlocation)
+    ld = Loader(args.watchlocation)
     wd.subscribe(lambda data: data_changed_handler(data, destination))
 
-    #print("Get initial data:")
-    #print(wd.getData())
+    print("Get initial data:")
+    print(ld.getData())
+    data_changed_handler(ld.getData(), destination) #send initial data to server
 
     print(f"Watching directory: {args.watchlocation}")
     print("Press Ctrl+C to stop.")
