@@ -1,5 +1,5 @@
 import os
-from DataUpdateStrategies.UpdateStrategies import *
+from update_strategies import AllDataUpdateStrategy
    
 class Loader:
     def __init__(self, dir_path, scan_on_startup=True, update_strategy=None):
