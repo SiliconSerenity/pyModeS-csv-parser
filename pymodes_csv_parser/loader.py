@@ -1,5 +1,5 @@
 import os
-from update_strategies import AllDataUpdateStrategy
+from pymodes_csv_parser.update_strategies import AllDataUpdateStrategy
    
 class Loader:
     def __init__(self, dir_path, scan_on_startup=True, update_strategy=None):

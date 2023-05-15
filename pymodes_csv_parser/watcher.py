@@ -1,6 +1,6 @@
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from update_strategies import NewDataUpdateStrategy
+from pymodes_csv_parser.update_strategies import NewDataUpdateStrategy
 
 class Watcher(FileSystemEventHandler):
 
