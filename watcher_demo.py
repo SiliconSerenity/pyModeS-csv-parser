@@ -1,7 +1,7 @@
 import sys
 import time
-from watcher import Watcher
-from watcher import Loader
+from pymodes_csv_parser.watcher import Watcher
+from pymodes_csv_parser.loader import Loader
 
 def data_changed_handler(data):
     print(data)

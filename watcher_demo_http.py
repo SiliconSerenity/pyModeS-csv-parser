@@ -2,7 +2,8 @@ import time
 import requests
 import json
 import argparse
-from watcher import Watcher, Loader
+from pymodes_csv_parser.watcher import Watcher
+from pymodes_csv_parser.loader import Loader
 
 def send_to_server(data, destination):
     response = requests.post(destination, json=data)
