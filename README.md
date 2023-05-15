@@ -5,7 +5,7 @@ Tools to improve the usefulness of pyModeS CSV output without modifying pyModeS 
 # CSV Watcher for pyModeS
 
 ## Overview
-The core of this repository is the CSV Watcher, or just Watcher. It is a class designed to be reusable in a variety of python programs to easily automate processing of data collected and output to CSV format by the pyModeS library. In addition to the Watcher, several useful examples of functionality are provided, but keep in mind that the Watcher is the first link in the chain for all of their functionality.
+The core of this repository consists of two main components: the CSV Loader and the CSV Watcher. The CSV Loader is responsible for loading data from existing CSV files, while the CSV Watcher is designed to obtain new data as it is appended to CSV files, or as new CSV files are created. These classes are designed to be reusable in a variety of python programs to easily automate processing of data collected and output to CSV format by the pyModeS library. In addition to the Loader and Watcher, several useful examples of functionality are provided. However, it's important to note that the Loader and Watcher serve as the foundational elements for all downstream functionality.
 
 See the Requirements section for details about the CSV format.
 
@@ -37,18 +37,23 @@ To use `watcher.py` and `watcher_demo.py`, you will need:
 
 ## Usage
 
-### watcher.py
-This package provides a `Watcher` class that monitors a directory for changes in CSV files and updates an internal data structure accordingly. It also includes a simple usage example in `watcher_demo.py` that demonstrates how to use the `Watcher` class and prints updated data to the console whenever a CSV file is modified.
+### watcher.py and loader.py
 
-Here's an example on how to use the `Watcher`:
+This package provides two classes: `Watcher` and `Loader`. The `Watcher` class is responsible for monitoring a directory for changes in CSV files, while the `Loader` class is responsible for loading data from existing CSV files.
+
+#### Watcher
+
+The `Watcher` class includes a simple usage example in `watcher_demo.py` that demonstrates how to use the `Watcher` class and prints updated data to the console whenever a CSV file is modified.
+
+Here's an example of how to use the `Watcher`:
 
 ```python
-from watcher import Watcher
+from pymodes_csv_parser.watcher import Watcher
 
 # Define a handler function
 def data_changed_handler(data):
     # Write your code that does stuff with the data here!
-    print(data) #for example, simply print the data to the console
+    print(data) # for example, simply print the data to the console
 
 # Create a new Watcher
 wd = Watcher('./data')
@@ -56,12 +61,7 @@ wd = Watcher('./data')
 wd.subscribe(data_changed_handler)
 ```
 
-By default, the `Watcher` will process all CSV files in the directory at startup. This behavior can be customized by passing a `process_at_start=False` argument to the `Watcher` constructor:
-
-```python
-# Create a new Watcher that does not process files at startup
-wd = Watcher('./data', process_at_start=False)
-```
+By default, the `Watcher` does not maintain an internal data structure as it only triggers the provided handler function whenever a CSV file is modified.
 
 Remember to replace `'./data'` with the path to the directory you want to monitor.
 
@@ -85,7 +85,45 @@ python3 watcher_demo.py [dir_path]
 
 Where `[dir_path]` is the path to the directory you want to monitor.
 
-Refer to `watcher_demo.py` for a working example. 
+Refer to `watcher_demo.py` for a working example.
+
+#### Loader
+
+The `Loader` class is responsible for loading data from existing CSV files and maintaining an internal data structure. You can use it as follows:
+
+```python
+from pymodes_csv_parser.loader import Loader
+
+# Create a new Loader
+ld = Loader('./data')
+# Load the data from CSV files
+data = ld.load_data()
+
+# Process the loaded data
+# Your code goes here
+```
+
+To customize the behavior of the `Loader`, you can pass additional arguments to the `Loader` constructor:
+
+- `scan_on_startup=False`: The `Loader` will not process files at startup, and the scan function must be invoked. This might be useful if you want to wait to do an initial scan for some reason.
+
+
+You can also force a re-scan at any time, regardless of whether a scan was performed on startup, with the `scan` method:
+```python
+from pymodes_csv_parser.loader import Loader
+
+ld = Loader('./data', scan_on_startup=False)
+data = ld.getData() # returns {}
+ld.scan()
+data = ld.getData() # returns populated data
+
+```
+
+
+Replace `'./data'` with the path to the directory containing the CSV files you want to load.
+
+Refer to `watcher_demo.py` for a working example, as it shows both the loader and the watcher in action.
+
 
 
 ### watcher_demo_http.py
